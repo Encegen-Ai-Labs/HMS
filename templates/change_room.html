@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .change-room-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .breadcrumb-left {
+    text-align: left !important;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+    .main-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+
+    .student-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #2c3e50;
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    select {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        min-width: 220px;
+    }
+
+    .update-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background: #4e73df;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .update-btn:hover {
+        background: #2e59d9;
+    }
+
+    .back-btn {
+    position: fixed;
+    top: 110px;
+    left: 500px; /* sidebar width + spacing */
+    background: #4e73df;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10;
+}
+.back-btn:hover {
+    background: #2e59d9;
+}
+
+</style>
+
+<div class="change-room-container">
+    <a href="{{ url_for('students') }}" class="back-btn">← Back</a>
+
+    <p class="breadcrumb-left">Student / Change Room</p>
+
+    <div class="main-title">Change Room & Bed</div>
+
+    <div class="student-title">for {{ student.name }}</div>
+
+    <form method="POST" action="{{ url_for('update_room', student_id=student.id) }}">
+
+        <div class="form-row">
+            <label><b>Select New Bed:</b></label>
+
+            <select name="bed_id" required>
+                {% for b in beds %}
+                <option value="{{ b.id }}">
+                    Room: {{ b.room_number }} — Bed: {{ b.bed_label }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <button class="update-btn">Update</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

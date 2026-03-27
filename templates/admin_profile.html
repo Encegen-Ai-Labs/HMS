@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="profile-wrapper">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+        <img src="{{ url_for('static', filename='uploads/Admin_photo.jpg') }}"
+             alt="Admin"
+             class="profile-img">
+
+        <h3>Hostel Administrator</h3>
+        
+    </div>
+
+    <!-- PROFILE DETAILS -->
+    <div class="profile-card">
+    
+
+        <div class="info-grid">
+            <div class="profile-details">
+
+
+    <p><strong>Name:-</strong> Narayan Sinha</p>
+    <p><strong>Email:-</strong> narayan@gmail.com</p>
+    <p><strong>Mobile:-</strong> 5473469456</p>
+    <p><strong>Role:-</strong> Admin</p>
+</div>
+
+        
+        </div>
+    </div>
+
+    <!-- UPDATE PROFILE -->
+    <div class="profile-card">
+        <h4>Update Profile</h4>
+
+        <form method="POST" action="/admin/update-profile" class="form-grid">
+            <input type="text" name="name" value="{{ admin.name }}" placeholder="Name" required>
+            <input type="text" name="mobile" value="{{ admin.mobile }}" placeholder="Mobile" required>
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div class="profile-card">
+        <h4>Change Password</h4>
+
+        <form method="POST" action="/admin/change-password" class="form-grid">
+            <input type="password" name="current_password" placeholder="Current Password" required>
+            <input type="password" name="new_password" placeholder="New Password" required>
+            <button class="warning" type="submit">Change Password</button>
+        </form>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary-grid">
+        <div class="summary-box">
+            <h5>Total Students</h5>
+            <p>{{ total_students }}</p>
+        </div>
+        <div class="summary-box">
+            <h5>Total Rooms</h5>
+            <p>{{ total_rooms }}</p>
+        </div>
+        <div class="summary-box">
+            <h5>Total Beds</h5>
+            <p>{{ total_beds }}</p>
+        </div>
+        <div class="summary-box">
+            <h5>Pending Fees</h5>
+            <p>₹{{ pending_fees }}</p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

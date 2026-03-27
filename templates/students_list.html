@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .container-box {
+        background: #fff;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-top: 20px;
+    }
+
+    .breadcrumb {
+        font-size: 15px;
+        margin-bottom: 10px;
+        color: #777;
+    }
+
+    .breadcrumb a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    h3 {
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    table th, table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .top-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .back-btn {
+        padding: 8px 16px;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .back-btn:hover {
+        background: #0056b3;
+    }
+
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        font-size: 15px;
+    }
+
+    th {
+        background: #f6f6f6;
+        font-weight: 600;
+    }
+
+</style>
+
+<div class="card-body">
+
+    <!-- Breadcrumb -->
+    <p>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a> / Total Students
+    </p>
+
+    <!-- Page Title -->
+    <h3>Total Students ({{ students|length }})</h3>
+
+    <!-- Back Button Left Side -->
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary" style="float: left; margin-bottom: 10px;">
+        ⬅ Back
+    </a>
+    <div style="clear: both;"></div>
+
+    <!-- Student Name Only Table -->
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>₹{{ student.rent }}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+
+</div>
+

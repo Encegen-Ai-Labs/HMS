@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.container-box {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+.breadcrumb {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.back-btn {
+    background: #007bff;
+    color: white;
+    padding: 7px 14px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    background: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f6f6f6;
+    font-weight: 600;
+}
+</style>
+
+<div class="container-box">
+
+    <p class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a> / Total Beds
+    </p>
+
+    <a href="{{ url_for('dashboard') }}" class="back-btn">⬅ Back</a>
+
+    <a href="{{ url_for('available_beds') }}">Total  Beds</a>
+
+    <h3 style="text-align:center; margin-top:10px;">Total Beds</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Total Beds</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for room, bedlist in rooms.items() %}
+            <tr>
+                <td>{{ room }}</td>
+                <td>{{ bedlist | join(', ') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

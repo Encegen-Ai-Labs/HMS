@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    
+
+    .fee-container{
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        width: 95%;
+        max-width: 1100px;
+        margin: 40px auto;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    /* Smaller main heading */
+    .title{
+        text-align: center;
+        font-size: 25px;       /* reduced from 28px */
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .fee-form{
+        background: #f9fafc;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+    }
+
+    .form-row{
+        display: flex;
+        justify-content: center;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 50px;
+        margin-bottom: 20px;
+    }
+
+    .form-group{
+        display: flex;
+        flex-direction: column;
+        width: 260px; 
+    }
+
+    .form-group label{
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #555;
+    }
+
+    .form-group input,
+    .form-group select{
+        padding: 14px 18px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        height: 48px;
+        outline: none;
+        transition: 0.3s;
+    }
+    .btn-add{
+        background: #2f66f5;
+        color: white;
+        border: none;
+        padding: 14px;
+        width: 100%;           /* BIGGER like student page */
+        font-size: 17px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+        margin-top: 20px;
+    }
+
+    .btn-add:hover{
+        background: #2456d6;
+        transform: scale(1.03);
+    }
+
+    /* TABLE SECTION */
+    .table-section{
+        margin-top: 10px;
+        background: #ffffff;
+        justify-content: center; 
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        overflow-x: auto;
+    }
+
+    table{
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 15px;
+    }
+
+    /* SAME HEADER COLOR AS ROOMS PAGE */
+    thead{
+        background: #2c3e50 !important;   /* Same dark navy */
+        padding: 5px;
+        color: #fff;
+    }
+
+    th{
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    td{
+        padding: 15px;
+        text-align: center;
+        color: #333;
+    }
+
+    tbody tr:nth-child(even){
+        background: #f8f9fc;
+    }
+
+    tbody tr:hover{
+        background: #eef2ff;
+    }
+</style>
+
+<div class="fee-container">
+
+    <h2 class="title">💰 Monthly Fee Management</h2>
+
+    <!-- ADD FEE FORM -->
+    <form action="{{ url_for('add_fee') }}" method="POST" class="fee-form">
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label>Student Name</label>
+            <select id="student" name="student_id" class="form-control">
+                <option value="">Select Student</option>
+                {% for s in students %}
+                    <option value="{{ s.id }}">{{ s.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fee Type</label>
+            <select name="fee_type" id="fee_type" class="form-control">
+                <option value="monthly">Monthly Fee</option>
+                <option value="multi">Multiple Months</option>
+                <option value="yearly">Full Year (12 Months)</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="month_box">
+            <label>Select Month</label>
+            <input type="month" name="selected_month" class="form-control">
+        </div>
+
+        <div class="form-group" id="multi_box" style="display:none;">
+            <label>Select Months (comma separated)</label>
+            <input type="text" name="multi_months" placeholder="2025-01, 2025-02" class="form-control">
+        </div>
+        <div class="form-group">
+        <label>Enter Amount Paid</label>
+        <input type="number" name="amount_paid" placeholder="Enter amount" class="form-control" required>
+    </div>
+
+</div>
+    </div>
+
+    <button type="submit" class="btn-add">+ Add Fee</button>
+</form>
+
+<script>
+document.getElementById("fee_type").addEventListener("change", function() {
+    let t = this.value;
+
+    document.getElementById("month_box").style.display = (t == "monthly") ? "block" : "none";
+    document.getElementById("multi_box").style.display = (t == "multi") ? "block" : "none";
+});
+</script>
+
+<hr>
+
+<h2 style="margin-top: 20px; font-size:20px; text-align: center;">Fee Records</h2>
+
+<div class="table-section">
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Month</th>
+            <th>Amount Paid</th>
+            <th>Pending Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for s in students %}
+<tr>
+  <td>{{ s.name }}</td>
+  <td>{{ s.total_paid }}</td>
+  <td>{{ s.pending_amount }}</td>
+  <td>
+    {% if s.payment_status == "Paid" %}
+      <span class="badge bg-success">Paid</span>
+    {% else %}
+      <span class="badge bg-warning">Pending</span>
+    {% endif %}
+  </td>
+</tr>
+{% endfor %}
+    
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .page-container {
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 30px;
+        background: white;
+        border-radius: 18px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        font-family: "Inter", sans-serif;
+    }
+
+    .breadcrumb {
+        color: #666;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .breadcrumb a {
+        color: #3498db;
+        text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    .back-btn {
+        background: #3498db;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s ease;
+    }
+
+    .back-btn:hover {
+        background: #2176b5;
+    }
+
+    h2 {
+        font-weight: 600;
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 15px;
+    }
+
+    th {
+        background: #f4f6fa;
+        text-align: left;
+        font-weight: 600;
+    }
+</style>
+
+<div class="page-container">
+
+    <!-- Breadcrumb -->
+    <p class="breadcrumb">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a> / Total Rooms
+    </p>
+
+    <!-- Back Button -->
+    <a href="{{ url_for('dashboard') }}" class="back-btn">⬅ Back</a>
+
+    <!-- Title -->
+    <h2>Total Rooms</h2>
+
+    <!-- Table with only Room Numbers -->
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for r in rooms %}
+            <tr>
+                <td>{{ r.room_number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

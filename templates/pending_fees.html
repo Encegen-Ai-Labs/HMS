@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Pending Fees</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th><th>Pending Amount</th>
+    </tr>
+    {% for s in students %}
+    <tr>
+        <td>{{ s.name }}</td>
+        <td>{{ s.pending_fee }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

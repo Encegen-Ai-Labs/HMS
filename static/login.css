@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #1f4037, #99f2c8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container */
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* White Card */
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Heading */
+.login-box h2 {
+    color: #1f4037;
+    margin-bottom: 5px;
+    font-size: 26px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Input Group */
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* Input Field */
+.input-group input {
+    width: 100%;
+    padding: 14px 10px;
+    border: none;
+    border-radius: 8px;
+    background: #eef6ff;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Floating Label */
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+/* Animation on focus or filled */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -8px;
+    background: white;
+    padding: 0 6px;
+    font-size: 13px;
+    color: #1f4037;
+}
+
+/* Button */
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    background: linear-gradient(to right, #1f4037, #2ecc71);
+    color: #fff;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: scale(1.05);
+}
+
+/* Remove yellow autofill background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #333;
+    transition: background-color 5000s ease-in-out 0s;
+}

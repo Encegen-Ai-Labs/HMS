@@ -1,0 +1,529 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    :root {
+        --primary: #152347;
+        --primary-light: #1e335c;
+        --accent: #0d6efd;
+        --danger: #dc3545;
+        --success: #198754;
+        --border: #d9d9d9;
+        --bg-light: #f5f6fa;
+        --radius: 6px;
+    }
+
+    input[type="date"] {
+    font-weight: 400 !important;
+    font-family: "Inter", sans-serif;
+    color: #374151;
+}
+
+
+    body {
+        background: var(--bg-light);
+        font-family: "Inter", sans-serif;
+    }
+
+    .page-wrapper {
+        background: white;
+        padding: 25px;
+        border-radius: var(--radius);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin: 15px 20px;
+
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       font-size: 22px;
+       font-weight: 600;
+    }
+
+    .page-title {
+    
+        font-size: 22px;
+        font-weight: 600;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border);
+        margin-bottom: 18px;
+        color: #333;
+    }
+
+    .top-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .search-box input,
+    .form-row input {
+        height: 40px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0 12px;
+        width: 200px;
+    }
+
+    
+
+    .btn-primary, .btn-success {
+        padding: 9px 20px;
+        border-radius: var(--radius);
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+    }
+
+    .btn-primary { background: var(--accent); }
+    .btn-success { background: var(--success); }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid var(--border);
+        margin-top: 10px;
+    }
+
+    th {
+        background: var(--primary);
+        color: white;
+        padding: 12px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+        font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+        background: #f8f9fc;
+    }
+
+    
+    .pagination {
+        margin-top: 15px;
+        text-align: right;
+        font-size: 14px;
+    }
+
+
+    /* ===== PROFILE POPUP ===== */
+.profile-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+}
+
+.popup-inner {
+    background: #fff;
+    width: 420px;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    position: relative;
+}
+
+/* Close icon */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #444;
+}
+
+/* ===== PROFILE CARD ===== */
+.profile-card {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+/* Avatar */
+.profile-left {
+    flex-shrink: 0;
+}
+
+.profile-left .avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid #e5e7eb;
+    object-fit: cover;
+}
+
+/* Right side */
+.profile-right {
+    flex: 1;
+}
+
+.profile-right h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.profile-info {
+    font-size: 14px;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.profile-info div {
+    display: flex;
+    gap: 6px;
+}
+
+.profile-info strong {
+    min-width: 90px;
+    color: #111827;
+}
+
+/* Email wrap fix */
+.profile-info span {
+    word-break: break-all;
+}
+
+/* ===== BUTTONS ===== */
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.popup-buttons button {
+    min-width: 90px;
+    height: 34px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+/* FIX ACTION BUTTONS HORIZONTAL */
+.action-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.action-cell a,
+.action-cell form {
+    display: inline-flex;
+    margin: 0;
+}
+
+/* =========================
+   FORM GRID FIX
+========================= */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.form-grid input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    background: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+table {
+    table-layout: fixed;
+}
+
+/* Common cell styling */
+th, td {
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+}
+.btn-tertiary {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    background: #f3f4f6;
+    color: #111827;
+    transition: all 0.2s ease;
+}
+
+.btn-tertiary:hover {
+    background: #e5e7eb;
+}
+
+/* Fixed column widths */
+th:nth-child(1) { width: 4%; }   /* ID */
+th:nth-child(2) { width: 14%; }  /* Name */
+th:nth-child(3) { width: 18%; }  /* Email */
+th:nth-child(4) { width: 10%; }  /* Mobile */
+th:nth-child(5) { width: 14%; }  /* Emergency */
+th:nth-child(6) { width: 6%; }   /* Room */
+th:nth-child(7) { width: 6%; }   /* Bed */
+th:nth-child(8) { width: 10%; }  /* Join Date */
+th:nth-child(9) { width: 7%; }   /* Room Rent */
+th:nth-child(10){ width: 7%; }   /* Student Rent */
+th:nth-child(11){ width: 12%; }  /* Actions */
+
+
+</style>
+
+<div id="profilePopup" class="profile-popup">
+    <div class="popup-inner">
+        
+        <span class="close-btn" onclick="closePopup()">×</span>
+
+        <div class="profile-card">
+
+            <div class="profile-left">
+                <img id="p_avatar" class="avatar">
+
+
+
+            </div>
+
+            <div class="profile-right">
+                <h3 id="p_name"></h3>
+
+                <div class="profile-info">
+                    <div><strong>Email:</strong> <span id="p_email"></span></div>
+                    <div><strong>Mobile:</strong> <span id="p_mobile"></span></div>
+                    <div><strong>Emergency:</strong> <span id="p_emergency"></span></div>
+                    <div><strong>Join Date:</strong> <span id="p_join_date"></span></div>
+                    <div><strong>Room:</strong> <span id="p_room"></span></div>
+                    <div><strong>Bed:</strong> <span id="p_bed"></span></div>
+                </div>
+            </div> 
+        </div>   
+
+        <div class="popup-buttons">
+            <button class="btn-primary" id="editBtn">Update</button>
+            <button class="btn-delete" onclick="closePopup()">Close</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="page-wrapper">
+     <i class="fas fa-user-graduate" style="margin-right:8px; color:#0d6efd;"></i>
+    Student Management
+</div>
+
+   
+    <!-- ========================== -->
+    <!-- SHOW FILTERS ONLY ON PAGE 1 -->
+    <!-- ========================== -->
+    {% if students.page == 1 %}
+
+    <div class="top-controls">
+    <form method="GET" action="{{ url_for('students') }}" class="search-box">
+        
+    </form>
+
+    <a href="{{ url_for('availability') }}">
+        <button class="btn-secondary">Show Availability</button>
+    </a>
+</div>
+
+    <form action="{{ url_for('students') }}" method="POST">
+        <div class="form-grid">
+            <input type="text" name="name" placeholder="Student Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text"
+       name="mobile"
+       placeholder="Mobile"
+       pattern="[0-9]{10}"
+       maxlength="10"
+       minlength="10"
+       required
+       title="Mobile number must be exactly 10 digits">
+
+            <input
+    type="text"
+    name="emergency_contact"
+    placeholder="Emergency Contact"
+    maxlength="10"
+    pattern="\d{10}"
+    title="Enter exactly 10 digits"
+    required
+>
+
+            <input type="date" name="join_date" required>
+        </div>
+
+        <button class="btn-primary" type="submit" style="width:100%;">Add Student</button>
+    </form>
+
+    {% endif %}
+    <!-- ========= END PAGE 1 AREA ========== -->
+
+
+    <!-- ====================== -->
+    <!-- TABLE -->
+    <!-- ====================== -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Emergency Contact</th>
+
+            <th>Room</th>
+            <th>Bed</th>
+            <th>Join Date</th>
+            <th>Student Rent</th>
+
+           <th style="width:140px;">Actions</th>
+
+        </tr>
+
+        {% for s in students.items %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>
+    <a href="#" class="open-profile" data-id="{{ s.id }}">
+        {{ s.name }}
+    </a>
+</td>
+
+            <td class="email-col" title="{{ s.email }}">
+    {{ s.email }}
+</td>
+
+            <td>{{ s.mobile }}</td>
+            <td>{{ s.emergency_contact }}</td>
+
+            <td>{{ s.room if s.room else '-' }}</td>
+            <td>{{ s.bed if s.bed else '-' }}</td>
+            <td>{{ s.join_date }}</td>
+            <td>₹{{ s.rent if s.rent else "-" }}</td>
+
+
+            <td class="action-cell">
+    <a href="/change_room/{{ s.id }}" class="btn-tertiary">
+        Edit
+    </a>
+
+    <form action="{{ url_for('delete_student', student_id=s.id) }}" method="POST"  style="display:inline;">
+        <button type="submit" class="btn-tertiary">
+            Delete
+        </button>
+    </form>
+</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+
+    <!-- ====================== -->
+    <!-- PAGINATION -->
+    <!-- ====================== -->
+    <div class="pagination">
+        {% if students.has_prev %}
+            <a href="{{ url_for('students', page=students.prev_num) }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ students.page }} of {{ students.pages }}</span>
+
+        {% if students.has_next %}
+            <a href="{{ url_for('students', page=students.next_num) }}">Next</a>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+
+    function allowOnlyNumbers(input) {
+    input.value = input.value.replace(/\D/g, '');
+}
+
+// =========================
+// OPEN PROFILE WHEN NAME CLICKED
+// =========================
+function closePopup() {
+    document.getElementById("profilePopup").style.display = "none";
+}
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("open-profile")) {
+        event.preventDefault();
+
+        let studentId = event.target.getAttribute("data-id");
+
+        fetch(`/get_student/${studentId}`)
+            .then(res => res.json())
+            .then(data => {
+
+                document.getElementById("p_name").innerText = data.name;
+                document.getElementById("p_email").innerText = data.email;
+                document.getElementById("p_mobile").innerText = data.mobile;
+                document.getElementById("p_emergency").innerText = data.emergency_contact;
+
+                document.getElementById("p_join_date").innerText = data.join_date;
+                document.getElementById("p_room").innerText = data.room;
+                document.getElementById("p_bed").innerText = data.bed;
+
+                document.getElementById("p_avatar").src =
+    data.photo
+        ? `/static/uploads/${data.photo}`
+        : `/static/uploads/punam.jpg`;
+
+
+
+        
+
+                document.getElementById("editBtn").onclick = () => {
+                    window.location.href = `/edit_student/${data.id}`;
+                };
+
+                document.getElementById("profilePopup").style.display = "flex";
+            });
+    }
+});
+
+
+</script>
+
+{% endblock %}

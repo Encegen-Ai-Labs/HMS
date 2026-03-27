@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.outer-box {
+    width: 95%;
+    max-width: 1300px;
+    margin: 30px auto;
+    background: rgba(255, 255, 255, 0.30);
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.inner-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 1150px;
+    margin: auto;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    margin-top: -60px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.form-row input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #dcdfe6;
+}
+
+.add-btn {
+    background: #2f66f5;
+    color: white;
+    border: none;
+    padding: 13px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #2456d6;
+}
+
+.custom-table {
+    width: 100%;
+    margin-top: 25px;
+    border-collapse: collapse;
+}
+
+.custom-table th {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.custom-table td {
+    padding: 14px;
+    background: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    text-align: center;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.pagination a {
+    padding: 6px 12px;
+    background: #2f66f5;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.pagination span {
+    margin: 0 10px;
+    font-weight: 600;
+}
+</style>
+
+<div class="outer-box">
+    <div class="inner-card">
+        
+        <h2 class="page-title">🏠 Rooms Management</h2>
+
+        <!-- Add Room Form -->
+        <form method="POST" action="{{ url_for('rooms') }}">
+            <div class="form-row">
+                <input type="text" name="room_number" placeholder="Room Number (e.g. 101)" required>
+                <input type="number" name="total_beds" placeholder="Total Beds" required>
+                
+            </div>
+
+            <button class="add-btn" type="submit">Add Room</button>
+        </form>
+
+        <!-- Rooms Table -->
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Room No</th>
+                    <th>Total Beds</th>
+                    <th>Occupied Beds</th>
+                    <th>Available Beds</th>
+                
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.room_number }}</td>
+                    <td>{{ room.total_beds }}</td>
+                    <td>{{ room.occupied_beds }}</td>
+                    <td>{{ room.available_beds }}</td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Floor Pagination -->
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="{{ url_for('rooms', page=page-1) }}">⬅ Previous</a>
+            {% endif %}
+
+            <span>
+                Floor {{ current_floor }} | Page {{ page }} of {{ total_pages }}
+            </span>
+
+            {% if page < total_pages %}
+                <a href="{{ url_for('rooms', page=page+1) }}">Next ➡</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

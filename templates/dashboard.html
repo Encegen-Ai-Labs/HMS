@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- PAGE TITLE -->
+<h2 style="
+    color:#0c0c0ccf;
+    margin-bottom:20px;
+    font-size:25px;
+    font-weight:600;
+    text-align:center;
+">
+    © 2025 Hostel Management System
+</h2>
+
+<!-- HEADER CARD -->
+<div class="header">
+    <h1>Welcome Admin 👋</h1>
+    <p>Hostel Management System Dashboard</p>
+</div>
+
+<!-- DASHBOARD CARDS -->
+<div class="cards">
+
+    <a href="{{ url_for('students_list') }}" class="card">
+        <h3>Total Students</h3>
+        <p>{{ total_students }}</p>
+    </a>
+
+    <a href="{{ url_for('rooms_list') }}" class="card">
+        <h3>Total Rooms</h3>
+        <p>{{ total_rooms }}</p>
+    </a>
+
+    <a href="{{ url_for('available_beds') }}" class="card">
+        <h3>Total Beds</h3>
+        <p>{{ total_beds }}</p>
+    </a>
+
+    <a href="{{ url_for('total_fees') }}" class="card">
+        <h3>Total Fees</h3>
+        <p>₹{{ total_fees }}</p>
+    </a>
+
+    <a href="{{ url_for('paid_fees_list') }}" class="card">
+        <h3>Paid Fees</h3>
+        <p>{{ paid_fees }}</p>
+    </a>
+
+    <a href="{{ url_for('pending_fees_list') }}" class="card">
+        <h3>Pending Fees</h3>
+        <p>{{ pending_fees }}</p>
+    </a>
+
+</div>
+
+{% endblock %}

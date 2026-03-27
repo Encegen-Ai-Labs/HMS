@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.total-fees-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.total-fees-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.fees-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.fees-table th {
+    background: #4a90e2;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.fees-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+.fees-table tr:hover {
+    background: #f0f7ff;
+}
+
+.amount {
+    font-weight: bold;
+    color: #2b7a0b;
+}
+</style>
+
+<div class="total-fees-container">
+
+    <div class="total-fees-title">💰 Total Fees Per Student</div>
+
+    <table class="fees-table">
+        <tr>
+            <th>Name</th>
+            <th>Total Fee</th>
+        </tr>
+
+        {% for s in data %}
+        <tr>
+            <td>{{ s.name }}</td>
+            <td class="amount">₹{{ s.total_fees }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

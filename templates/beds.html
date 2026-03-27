@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<style>
+    
+
+    .container {
+        max-width: 1000px;
+        
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 0px 5px;
+        box-shadow: 0 10px 25px rgba(34, 3, 49, 0.136);
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 25px;
+        font-weight: 700;
+        color: #070b12;
+        
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        background: #2c3e50;
+        color: #ffffff;
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    tr:hover {
+        background: #f0f6ff;
+        transition: 0.3s ease;
+    }
+
+    .available {
+        background-color: #d4edda;
+        color: #155724;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+
+    .occupied {
+        background-color: #f8d7da;
+        color: #721c24;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+
+    <h2 class="page-title">🛏️ Beds Management</h2>
+
+    <table>
+        <tr>
+            <th>Bed ID</th>
+            <th>Room No</th>
+            <th>Status</th>
+            <th>Allocated To</th>
+        </tr>
+
+        {% for bed in beds %}
+        <tr>
+            <td>{{ bed.bed_id }}</td>
+            <td>{{ bed.room_number }}</td>
+            <td>
+                {% if bed.status == 'Available' %}
+                    <span class="available">{{ bed.status }}</span>
+                {% else %}
+                    <span class="occupied">{{ bed.status }}</span>
+                {% endif %}
+            </td>
+            <td>
+    {% if bed.student %}
+        {{ bed.student.name }}
+    {% else %}
+        <span style="color:#999;">---</span>
+    {% endif %}
+</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+   <div style="margin-top:20px; text-align:right;">
+    {% if page > 1 %}
+        <a href="{{ url_for('beds_page', page=page-1) }}">Previous</a>
+    {% endif %}
+
+    Page {{ page }} of {{ total_pages }}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('beds_page', page=page+1) }}">Next</a>
+    {% endif %}
+</div>
+ 
+
+</div>
+
+{% endblock %}

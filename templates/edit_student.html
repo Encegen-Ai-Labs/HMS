@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+        select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.container {
+    overflow: hidden;
+}
+.form-group {
+    position: relative;
+}
+
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 95%;
+            max-width: 800px;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 30px 35px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 600;
+            color: #2c5364;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        input, select {
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            color: #2c5364;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title">Edit Student</div>
+
+    <!-- IMPORTANT: action and method fixed -->
+     <form method="POST">
+
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" value="{{ student.name }}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" value="{{ student.email }}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Mobile</label>
+    <input type="text" name="mobile" value="{{ student.mobile }}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Emergency Contact</label>
+    <input type="text" name="emergency_contact"
+           value="{{ student.emergency_contact }}">
+  </div>
+
+  <div class="form-group">
+    <label>Join Date</label>
+    <input type="date" name="join_date"
+           value="{{ student.join_date }}">
+  </div>
+
+
+  <button type="submit" class="btn btn-success">
+    Save
+  </button>
+
+</form>
+
+</div>
+
+</body>
+</html>

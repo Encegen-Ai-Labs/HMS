@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Log History</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid black; padding: 10px;}
+        th { background: #4facfe; color: white; }
+    </style>
+</head>
+<body>
+    
+<h2>Payment Log History</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date & Time</th>
+            <th>Student Name</th>
+            <th>Month</th>
+            <th>Amount Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.timestamp.strftime("%d-%m-%Y %I:%M %p") }}</td>
+            <td>{{ log.student_name }}</td>
+            <td>{{ log.month }}</td>
+            <td>{{ log.amount_paid }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+</body>
+</html>

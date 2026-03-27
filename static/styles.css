@@ -1,0 +1,244 @@
+/* Container same as Student Page */
+.container-box {
+    max-width: 95%;
+    background: #fff;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.page-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Add Room Form */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-row input {
+    width: 220px;
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    background: #f8f8f8;
+}
+
+/* Blue Button (same as Student Page) */
+.btn-primary {
+    background: #3fbdf3ff;
+    color: white;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #315bd1;
+}
+
+/* Table Design same as student page */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.styled-table thead th {
+    background: #1f3352;
+    color: white;
+    text-align: center !important;
+    padding: 12px;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: #f1f4ff;
+}
+
+.styled-table tbody td {
+    text-align: center !important;
+    padding: 12px;
+}
+
+
+.styled-table tbody tr:hover {
+    background: #dce6ff;
+}
+
+/* =========================
+   TERTIARY ACTION BUTTONS
+   ========================= */
+
+.btn-tertiary,
+.btn-tertiary-danger {
+    background: none !important;
+    border: none !important;
+    padding: 0;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-tertiary {
+    color: #0d6efd;
+}
+
+.btn-tertiary:hover {
+    text-decoration: underline;
+}
+
+.btn-tertiary-danger {
+    color: #dc3545;
+}
+
+.btn-tertiary-danger:hover {
+    text-decoration: underline;
+}
+.btn-secondary {
+    background: #0d6efd;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.btn-secondary:hover {
+    opacity: 1;
+}
+.admin-profile-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #0d6efd;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    background: #fff;
+}
+
+.profile-wrapper {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* HEADER */
+.profile-header {
+    background: linear-gradient(135deg, #2e3a59, #1cc88a);
+    text-align: center;
+    padding: 30px;
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.profile-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* CARDS */
+.profile-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+.profile-card h4 {
+    margin-bottom: 15px;
+    color: #2e3a59;
+}
+
+/* INFO GRID */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.info-grid span {
+    font-size: 13px;
+    color: gray;
+}
+
+.info-grid p {
+    font-weight: 500;
+}
+
+/* FORMS */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-grid input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-grid button {
+    grid-column: span 2;
+    padding: 12px;
+    background: #2e3a59;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form-grid button.warning {
+    background: #f6c23e;
+    color: #000;
+}
+
+/* SUMMARY */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.summary-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.summary-box h5 {
+    color: gray;
+    margin-bottom: 8px;
+}
+.profile-details p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #333;
+}
+
+.profile-details strong {
+    color: #2e3a59;
+}
