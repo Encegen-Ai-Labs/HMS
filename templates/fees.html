@@ -199,21 +199,24 @@ document.getElementById("fee_type").addEventListener("change", function() {
         </tr>
     </thead>
     <tbody>
-    {% for s in students %}
-<tr>
-  <td>{{ s.name }}</td>
-  <td>{{ s.total_paid }}</td>
-  <td>{{ s.pending_amount }}</td>
-  <td>
-    {% if s.payment_status == "Paid" %}
-      <span class="badge bg-success">Paid</span>
+    {% for f in fees %}
+    <tr>
+      <td>{{ f.id }}</td>
+      <td>{{ f.student.name if f.student else '—' }}</td>
+      <td>{{ f.month.strftime('%B %Y') if f.month else '—' }}</td>
+      <td>₹{{ f.amount_paid | int }}</td>
+      <td>₹{{ [[((f.student.rent or 0) - (f.amount_paid or 0)), 0] | max] | first | int }}</td>
+      <td>
+        {% if (f.amount_paid or 0) >= (f.student.rent or 0) %}
+          <span class="badge bg-success">Paid</span>
+        {% else %}
+          <span class="badge bg-warning text-dark">Pending</span>
+        {% endif %}
+      </td>
+    </tr>
     {% else %}
-      <span class="badge bg-warning">Pending</span>
-    {% endif %}
-  </td>
-</tr>
-{% endfor %}
-    
+    <tr><td colspan="6" style="text-align:center;color:#888;">No fee records yet.</td></tr>
+    {% endfor %}
     </tbody>
 </table>
 </div>

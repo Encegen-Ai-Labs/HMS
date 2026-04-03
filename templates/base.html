@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 
 
@@ -269,11 +269,14 @@ function showToast(message, category) {
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
+{% for category, message in messages %}
+<div class="flask-toast" data-message="{{ message }}" data-category="{{ category }}" style="display:none;"></div>
+{% endfor %}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    {% for category, message in messages %}
-            showToast("{{ message }}", "{{ category }}");
-    {% endfor %}
+    document.querySelectorAll(".flask-toast").forEach(function(el) {
+        showToast(el.dataset.message, el.dataset.category);
+    });
 });
 </script>
 {% endif %}

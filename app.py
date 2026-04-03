@@ -3,12 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, or_
 from datetime import datetime
 from flask import session
-import re
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+import re
 
+import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hostel.db'
-app.config['SECRET_KEY'] = 'secretkey'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or os.urandom(24)
 db = SQLAlchemy(app)
 
 
@@ -90,8 +92,14 @@ class Student(db.Model):
 
     @property
     def pending_amount(self):
-        pending = self.total_due - self.total_paid
-        return pending if pending > 0 else 0
+        # Sum the shortfall on each individual fee record
+        total = 0
+        rent = self.rent or 0
+        for f in self.fees:
+            shortfall = rent - (f.amount_paid or 0)
+            if shortfall > 0:
+                total += shortfall
+        return total
 
     @property
     def payment_status(self):
@@ -475,11 +483,17 @@ def delete_student(student_id):
     room_number = student.room
     bed_label = student.bed
 
-    # 1️⃣ FREE the bed
+    # 1️⃣ FREE the bed — mark is_available=True and clear allocated_to
     bed = Bed.query.filter_by(room_number=room_number, bed_label=bed_label).first()
     if bed:
-        bed.status = "Available"      # bed becomes green
-        bed.allocated_to = None       # clear student id
+        bed.status = "Available"
+        bed.is_available = True       # Fix bug #5: is_available was never reset
+        bed.allocated_to = None
+
+        # Fix bug #6: decrement occupied_beds so dashboard counts stay correct
+        room = Room.query.filter_by(room_number=room_number).first()
+        if room and room.occupied_beds > 0:
+            room.occupied_beds -= 1
 
     # 2️⃣ DELETE student's fee records
     Fee.query.filter_by(student_id=student_id).delete()
@@ -785,14 +799,17 @@ def api_student_info(student_id):
     if not s:
         return jsonify({"error": "Student not found"}), 404
 
-    # Ensure join_date exists and is a proper YYYY-MM-DD string
+    # join_date is already a date object from SQLAlchemy – format directly
     month_formatted = ""
     try:
         if s.join_date:
-            dt = datetime.strptime(s.join_date, "%Y-%m-%d")
+            if isinstance(s.join_date, str):
+                dt = datetime.strptime(s.join_date, "%Y-%m-%d").date()
+            else:
+                dt = s.join_date
             month_formatted = dt.strftime("%B %Y")   # e.g. "March 2025"
     except Exception:
-        month_formatted = s.join_date or ""
+        month_formatted = str(s.join_date) if s.join_date else ""
 
     return jsonify({
         "id": s.id,
@@ -806,12 +823,18 @@ def api_student_info(student_id):
 @app.route("/add_fee", methods=["POST"])
 def add_fee():
     student_id = request.form["student_id"]
-    amount = int(request.form["amount"])
-    month_str = request.form["month"]   # "2025-02"
-    month_date = datetime.strptime(month_str, "%Y-%m").date()
+    amount = int(request.form["amount_paid"])
+    month_str = request.form.get("selected_month", "").strip()
+
+    # Default to current month if nothing selected
+    if month_str:
+        month_date = datetime.strptime(month_str, "%Y-%m").date()
+    else:
+        month_date = date.today().replace(day=1)
 
     fee = Fee(
         student_id=student_id,
+        month=month_date,
         amount_paid=amount,
         months_paid_for=month_date.month,
         payment_date=date.today()
@@ -821,7 +844,7 @@ def add_fee():
     db.session.commit()
 
     flash("Fee recorded successfully", "success")
-    return redirect(url_for("fees"))
+    return redirect(url_for("fees_page"))
 
 
 
@@ -862,9 +885,9 @@ def create_fee():
 
     fee = Fee(
         student_id=student_id,
-        month=month or datetime.now().strftime("%B %Y"),
+        month=datetime.strptime(month, "%Y-%m").date() if month else date.today().replace(day=1),
         amount_paid=amount_paid,
-        pending_date=date.today(),
+        payment_date=date.today(),
         months_paid_for=1
     )
     db.session.add(fee)
