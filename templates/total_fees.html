@@ -3,48 +3,54 @@
 
 <style>
 .total-fees-container {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    width: 90%;
-    margin: auto;
-    margin-top: 30px;
+    background: rgba(15, 23, 42, 0.96);
+    padding: 32px;
+    border-radius: 24px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+    width: min(100%, 980px);
+    margin: 32px auto;
+    border: 1px solid rgba(148, 163, 184, 0.16);
 }
 
 .total-fees-title {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: #f8fafc;
 }
 
 .fees-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .fees-table th {
-    background: #4a90e2;
-    color: white;
-    padding: 12px;
+    background: rgba(15, 23, 42, 0.98);
+    color: #e2e8f0;
+    padding: 16px;
     text-align: left;
-    font-size: 16px;
-}
-
-.fees-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
     font-size: 15px;
 }
 
+.fees-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    font-size: 15px;
+    color: #cbd5e1;
+}
+
+.fees-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
 .fees-table tr:hover {
-    background: #f0f7ff;
+    background: rgba(56, 189, 248, 0.08);
 }
 
 .amount {
     font-weight: bold;
-    color: #2b7a0b;
+    color: #a7f3d0;
 }
 </style>
 

@@ -2,93 +2,98 @@
 {% block content %}
 
 <style>
-    
-
     .fee-container{
-        background: #fff;
-        padding: 30px;
-        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.96);
+        padding: 32px;
+        border-radius: 24px;
         width: 95%;
-        max-width: 1100px;
+        max-width: 1120px;
         margin: 40px auto;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        box-shadow: 0 24px 60px rgba(0,0,0,0.24);
+        border: 1px solid rgba(148, 163, 184, 0.16);
     }
 
-    /* Smaller main heading */
     .title{
         text-align: center;
-        font-size: 25px;       /* reduced from 28px */
+        font-size: 28px;
         font-weight: 700;
-        margin-bottom: 10px;
-        color: #333;
+        margin-bottom: 18px;
+        color: #e2e8f0;
     }
 
     .fee-form{
-        background: #f9fafc;
-        padding: 30px;
-        border-radius: 15px;
-        margin-bottom: 25px;
+        background: rgba(15, 23, 42, 0.92);
+        padding: 28px;
+        border-radius: 22px;
+        margin-bottom: 28px;
+        border: 1px solid rgba(148, 163, 184, 0.14);
     }
 
     .form-row{
-        display: flex;
-        justify-content: center;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 50px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 22px;
         margin-bottom: 20px;
     }
 
     .form-group{
         display: flex;
         flex-direction: column;
-        width: 260px; 
     }
 
     .form-group label{
         font-size: 14px;
         font-weight: 600;
-        margin-bottom: 6px;
-        color: #555;
+        margin-bottom: 10px;
+        color: #94a3b8;
     }
 
     .form-group input,
     .form-group select{
-        padding: 14px 18px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
+        padding: 16px 18px;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
         font-size: 16px;
-        height: 48px;
+        height: 52px;
         outline: none;
-        transition: 0.3s;
+        background: #0f172a;
+        color: #e2e8f0;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: rgba(56, 189, 248, 0.7);
+        box-shadow: 0 0 0 6px rgba(56, 189, 248, 0.12);
+    }
+
     .btn-add{
-        background: #2f66f5;
-        color: white;
+        background: linear-gradient(135deg, #22c55e, #38bdf8);
+        color: #0f172a;
         border: none;
-        padding: 14px;
-        width: 100%;           /* BIGGER like student page */
+        padding: 16px;
+        width: 100%;
         font-size: 17px;
-        border-radius: 10px;
+        border-radius: 16px;
         cursor: pointer;
-        font-weight: 600;
-        transition: 0.3s;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         margin-top: 20px;
     }
 
     .btn-add:hover{
-        background: #2456d6;
-        transform: scale(1.03);
+        transform: translateY(-2px);
+        box-shadow: 0 18px 30px rgba(34, 197, 94, 0.2);
     }
 
-    /* TABLE SECTION */
     .table-section{
-        margin-top: 10px;
-        background: #ffffff;
-        justify-content: center; 
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        margin-top: 24px;
+        background: rgba(15, 23, 42, 0.92);
+        padding: 24px;
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.18);
         overflow-x: auto;
+        border: 1px solid rgba(148, 163, 184, 0.14);
     }
 
     table{
@@ -97,31 +102,51 @@
         font-size: 15px;
     }
 
-    /* SAME HEADER COLOR AS ROOMS PAGE */
     thead{
-        background: #2c3e50 !important;   /* Same dark navy */
-        padding: 5px;
+        background: rgba(15, 23, 42, 0.98) !important;
         color: #fff;
     }
 
     th{
-        padding: 10px;
+        padding: 14px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        font-weight: 700;
+        text-align: center;
     }
 
     td{
-        padding: 15px;
+        padding: 16px;
         text-align: center;
-        color: #333;
+        color: #cbd5e1;
     }
 
     tbody tr:nth-child(even){
-        background: #f8f9fc;
+        background: rgba(255,255,255,0.03);
     }
 
     tbody tr:hover{
-        background: #eef2ff;
+        background: rgba(56, 189, 248, 0.08);
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .bg-success {
+        background: rgba(34, 197, 94, 0.18);
+        color: #a7f3d0;
+    }
+
+    .bg-warning {
+        background: rgba(251, 191, 36, 0.18);
+        color: #facc15;
     }
 </style>
 

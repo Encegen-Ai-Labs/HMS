@@ -6,14 +6,16 @@
     width: 95%;
     max-width: 1300px;
     margin: 30px auto;
-    background: rgba(255, 255, 255, 0.30);
+    background: rgba(15, 23, 42, 0.96);
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 24px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
 }
 
 .inner-card {
-    background: #ffffff;
-    padding: 30px;
+    background: transparent;
+    padding: 10px 0 0 0;
     border-radius: 15px;
     max-width: 1150px;
     margin: auto;
@@ -21,73 +23,101 @@
 
 .page-title {
     text-align: center;
-    font-size: 25px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    margin-top: -60px;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 28px;
+    margin-top: 0;
+    color: #f8fafc;
 }
 
 .form-row {
     display: flex;
     gap: 15px;
     justify-content: center;
-    margin-bottom: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .form-row input {
-    padding: 10px;
+    padding: 14px 16px;
     width: 100%;
-    border-radius: 8px;
-    border: 1px solid #dcdfe6;
+    max-width: 320px;
+    border-radius: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: #0f172a;
+    color: #e2e8f0;
 }
 
 .add-btn {
-    background: #2f66f5;
-    color: white;
+    background: linear-gradient(135deg, #22c55e, #38bdf8);
+    color: #0f172a;
     border: none;
-    padding: 13px;
+    padding: 14px 18px;
     width: 100%;
+    max-width: 180px;
     font-size: 16px;
-    border-radius: 8px;
+    border-radius: 16px;
     cursor: pointer;
+    font-weight: 700;
 }
 
 .add-btn:hover {
-    background: #2456d6;
+    opacity: 0.95;
 }
 
 .custom-table {
     width: 100%;
     margin-top: 25px;
     border-collapse: collapse;
+    background: rgba(15, 23, 42, 0.96);
+    border-radius: 18px;
+    overflow: hidden;
 }
 
-.custom-table th {
-    background: #2c3e50;
-    color: white;
-    padding: 10px;
+.custom-table thead th {
+    background: rgba(15, 23, 42, 0.98);
+    color: #e2e8f0;
+    padding: 16px;
     text-align: center;
 }
 
 .custom-table td {
-    padding: 14px;
-    background: #f8f9fc;
-    border-bottom: 1px solid #e3e6f0;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
     text-align: center;
+    color: #cbd5e1;
+}
+
+.custom-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.custom-table tr:hover td {
+    background: rgba(56, 189, 248, 0.08);
 }
 
 .pagination {
     margin-top: 20px;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    color: #cbd5e1;
 }
 
 .pagination a {
-    padding: 6px 12px;
-    background: #2f66f5;
-    color: white;
-    border-radius: 5px;
+    padding: 10px 14px;
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border-radius: 14px;
     text-decoration: none;
-    margin-left: 5px;
+    transition: background 0.2s ease;
+}
+
+.pagination a:hover {
+    background: rgba(56, 189, 248, 0.2);
 }
 
 .pagination span {

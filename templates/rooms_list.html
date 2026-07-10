@@ -3,23 +3,23 @@
 
 <style>
     .page-container {
-        max-width: 700px;
+        max-width: 760px;
         margin: 30px auto;
-        padding: 30px;
-        background: white;
-        border-radius: 18px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        font-family: "Inter", sans-serif;
+        padding: 32px;
+        background: rgba(15, 23, 42, 0.96);
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.24);
+        border: 1px solid rgba(148, 163, 184, 0.16);
     }
 
     .breadcrumb {
-        color: #666;
+        color: #94a3b8;
         font-size: 15px;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
     }
 
     .breadcrumb a {
-        color: #3498db;
+        color: #38bdf8;
         text-decoration: none;
     }
 
@@ -28,41 +28,52 @@
     }
 
     .back-btn {
-        background: #3498db;
-        color: white;
-        padding: 8px 18px;
-        border-radius: 6px;
+        background: rgba(56, 189, 248, 0.16);
+        color: #e2e8f0;
+        padding: 10px 18px;
+        border-radius: 14px;
         text-decoration: none;
         font-size: 14px;
-        transition: 0.2s ease;
+        transition: background 0.2s ease;
+        border: 1px solid rgba(56, 189, 248, 0.22);
     }
 
     .back-btn:hover {
-        background: #2176b5;
+        background: rgba(56, 189, 248, 0.28);
     }
 
     h2 {
-        font-weight: 600;
-        margin: 15px 0;
+        font-weight: 700;
+        margin: 18px 0 14px;
         text-align: center;
+        color: #e2e8f0;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 15px;
+        margin-top: 18px;
     }
 
     th, td {
-        padding: 12px 10px;
-        border-bottom: 1px solid #eee;
+        padding: 14px 12px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
         font-size: 15px;
+        color: #cbd5e1;
     }
 
     th {
-        background: #f4f6fa;
+        background: rgba(15, 23, 42, 0.98);
         text-align: left;
-        font-weight: 600;
+        font-weight: 700;
+    }
+
+    tbody tr:nth-child(even) {
+        background: rgba(255,255,255,0.03);
+    }
+
+    tbody tr:hover {
+        background: rgba(56, 189, 248, 0.08);
     }
 </style>
 

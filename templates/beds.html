@@ -3,65 +3,97 @@
 
 
 <style>
-    
-
     .container {
         max-width: 1000px;
-        
-        background: #ffffff;
-        border-radius: 15px;
-        padding: 0px 5px;
-        box-shadow: 0 10px 25px rgba(34, 3, 49, 0.136);
+        margin: 40px auto;
+        background: rgba(15, 23, 42, 0.96);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(148, 163, 184, 0.16);
     }
 
     .page-title {
         text-align: center;
-        margin-bottom: 30px;
-        font-size: 25px;
-        font-weight: 700;
-        color: #070b12;
-        
+        margin-bottom: 28px;
+        font-size: 28px;
+        font-weight: 800;
+        color: #f8fafc;
     }
 
-    table {
+    .beds-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin-top: 18px;
     }
 
-    th {
-        background: #2c3e50;
-        color: #ffffff;
-        padding: 10px;
+    .beds-table th {
+        background: rgba(15, 23, 42, 0.98);
+        color: #e2e8f0;
+        padding: 16px;
         font-size: 15px;
+        text-align: center;
     }
 
-    td {
-        padding: 12px;
+    .beds-table td {
+        padding: 16px;
         text-align: center;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        color: #cbd5e1;
         font-size: 14px;
     }
 
-    tr:hover {
-        background: #f0f6ff;
-        transition: 0.3s ease;
+    .beds-table tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.03);
     }
 
-    .available {
-        background-color: #d4edda;
-        color: #155724;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 5px;
+    .beds-table tr:hover {
+        background: rgba(56, 189, 248, 0.08);
     }
 
-    .occupied {
-        background-color: #f8d7da;
-        color: #721c24;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 5px;
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .status-pill.available {
+        background: rgba(34, 197, 94, 0.16);
+        color: #a7f3d0;
+    }
+
+    .status-pill.occupied {
+        background: rgba(248, 113, 113, 0.16);
+        color: #fecaca;
+    }
+
+    .pagination {
+        margin-top: 24px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        color: #cbd5e1;
+    }
+
+    .pagination a {
+        color: #38bdf8;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(56, 189, 248, 0.08);
+        transition: background 0.2s ease;
+    }
+
+    .pagination a:hover {
+        background: rgba(56, 189, 248, 0.16);
+    }
+
+    .empty-label {
+        color: #94a3b8;
     }
 </style>
 
@@ -69,35 +101,37 @@
 
     <h2 class="page-title">🛏️ Beds Management</h2>
 
-    <table>
-        <tr>
-            <th>Bed ID</th>
-            <th>Room No</th>
-            <th>Status</th>
-            <th>Allocated To</th>
-        </tr>
-
-        {% for bed in beds %}
-        <tr>
-            <td>{{ bed.bed_id }}</td>
-            <td>{{ bed.room_number }}</td>
-            <td>
-                {% if bed.status == 'Available' %}
-                    <span class="available">{{ bed.status }}</span>
-                {% else %}
-                    <span class="occupied">{{ bed.status }}</span>
-                {% endif %}
-            </td>
-            <td>
-    {% if bed.student %}
-        {{ bed.student.name }}
-    {% else %}
-        <span style="color:#999;">---</span>
-    {% endif %}
-</td>
-
-        </tr>
-        {% endfor %}
+    <table class="beds-table">
+        <thead>
+            <tr>
+                <th>Bed ID</th>
+                <th>Room No</th>
+                <th>Status</th>
+                <th>Allocated To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bed in beds %}
+            <tr>
+                <td>{{ bed.bed_id }}</td>
+                <td>{{ bed.room_number }}</td>
+                <td>
+                    {% if bed.status == 'Available' %}
+                        <span class="status-pill available">{{ bed.status }}</span>
+                    {% else %}
+                        <span class="status-pill occupied">{{ bed.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if bed.student %}
+                        {{ bed.student.name }}
+                    {% else %}
+                        <span class="empty-label">---</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
    <div style="margin-top:20px; text-align:right;">
