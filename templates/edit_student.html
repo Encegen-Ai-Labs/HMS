@@ -1,51 +1,188 @@
-{% extends "base.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
 
-<div class="container-box" style="max-width:880px; margin: auto;">
-    <div class="page-title">Edit Student</div>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #12563f 0%, #0e1420 45%, #0a0e17 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    <form method="POST" class="form-grid">
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" value="{{ student.name }}" required>
-        </div>
+        .container {
+            background: #161d2e;
+            width: 95%;
+            max-width: 800px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            padding: 34px 38px;
+            overflow: hidden;
+            animation: fadeInUp 0.45s ease both;
+        }
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" value="{{ student.email }}" required>
-        </div>
+        .title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 26px;
+        }
 
-        <div class="form-group">
-            <label>Mobile</label>
-            <input type="text"
-                   name="mobile"
-                   value="{{ student.mobile }}"
-                   pattern="\d{10}"
-                   maxlength="10"
-                   title="Enter exactly 10 digits"
-                   required>
-        </div>
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px 25px;
+        }
 
-        <div class="form-group">
-            <label>Emergency Contact</label>
-            <input type="text"
-                   name="emergency_contact"
-                   value="{{ student.emergency_contact }}"
-                   pattern="\d{10}"
-                   maxlength="10"
-                   title="Enter exactly 10 digits"
-                   required>
-        </div>
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
 
-        <div class="form-group">
-            <label>Join Date</label>
-            <input type="date" name="join_date" value="{{ student.join_date }}" required>
-        </div>
+        label {
+            font-size: 14px;
+            color: #a6b0c3;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
 
-        <div class="form-group" style="grid-column: span 2; display:flex; justify-content:flex-end;">
-            <button type="submit" class="btn-primary" style="width: 180px;">Save Changes</button>
-        </div>
-    </form>
+        input, select {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: #1c2438;
+            color: #e9edf7;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #1cc88a;
+            box-shadow: 0 0 0 3px rgba(28, 200, 138, 0.16);
+        }
+
+        input.field-invalid { border-color: #ef5a6f; box-shadow: 0 0 0 3px rgba(239,90,111,0.16); animation: shake 0.4s ease; }
+        input.field-valid { border-color: #1cc88a; }
+
+        .field-error-msg {
+            color: #ff8a9a;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #1cc88a, #17a874);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 8px 20px rgba(28, 200, 138, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(28, 200, 138, 0.4);
+        }
+
+        .btn-back {
+            text-decoration: none;
+            color: #6fa8ff;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-back:hover { text-decoration: underline; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            10%, 90% { transform: translateX(-1px); }
+            20%, 80% { transform: translateX(2px); }
+            30%, 50%, 70% { transform: translateX(-4px); }
+            40%, 60% { transform: translateX(4px); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title">Edit Student</div>
+
+    <form method="POST" novalidate>
+
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" value="{{ student.name }}" required minlength="2">
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" value="{{ student.email }}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Mobile</label>
+    <input type="text" name="mobile" value="{{ student.mobile }}"
+           pattern="[0-9]{10}" maxlength="10" minlength="10"
+           title="Mobile number must be exactly 10 digits" required>
+  </div>
+
+  <div class="form-group">
+    <label>Emergency Contact</label>
+    <input type="text" name="emergency_contact"
+           value="{{ student.emergency_contact }}"
+           pattern="[0-9]{10}" maxlength="10"
+           title="Enter exactly 10 digits">
+  </div>
+
+  <div class="form-group">
+    <label>Join Date</label>
+    <input type="date" name="join_date"
+           value="{{ student.join_date }}">
+  </div>
+
+  <div class="actions">
+    <a href="{{ url_for('students') }}" class="btn-back"><i class="fas fa-arrow-left"></i> Back</a>
+    <button type="submit" class="btn-save">
+        <i class="fas fa-floppy-disk"></i> Save
+    </button>
+  </div>
+
+</form>
+
 </div>
 
-{% endblock %}
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+</body>
+</html>

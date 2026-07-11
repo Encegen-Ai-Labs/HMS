@@ -3,22 +3,21 @@
 
 <style>
     :root {
-        --primary: #152347;
-        --primary-light: #1e335c;
-        --accent: #0d6efd;
-        --danger: #dc3545;
-        --success: #198754;
-        --border: #d9d9d9;
-        --bg-light: #f5f6fa;
-        --radius: 6px;
+        --primary: #202a42;
+        --primary-light: #263254;
+        --accent: #4e8cff;
+        --danger: #ef5a6f;
+        --success: #1cc88a;
+        --border: rgba(255, 255, 255, 0.10);
+        --bg-light: #0e1420;
+        --radius: 8px;
     }
 
     input[type="date"] {
-    font-weight: 400 !important;
-    font-family: "Inter", sans-serif;
-    color: #374151;
-}
-
+        font-weight: 400 !important;
+        font-family: "Inter", sans-serif;
+        color: #e9edf7;
+    }
 
     body {
         background: var(--bg-light);
@@ -26,27 +25,29 @@
     }
 
     .page-wrapper {
-        background: white;
-        padding: 25px;
+        background: var(--bg-card-alt, #1f2a42);
+        padding: 20px 25px;
         border-radius: var(--radius);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        margin: 15px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+        margin: 0 0 18px 0;
 
        display: flex;
        justify-content: center;
        align-items: center;
        font-size: 22px;
        font-weight: 600;
+       color: var(--text-primary, #e9edf7);
+       animation: fadeInUp 0.4s ease both;
     }
 
     .page-title {
-    
         font-size: 22px;
         font-weight: 600;
         padding-bottom: 10px;
         border-bottom: 2px solid var(--border);
         margin-bottom: 18px;
-        color: #333;
+        color: var(--text-primary, #e9edf7);
     }
 
     .top-controls {
@@ -63,9 +64,9 @@
         border-radius: var(--radius);
         padding: 0 12px;
         width: 200px;
+        background: var(--bg-input, #1c2438);
+        color: var(--text-primary, #e9edf7);
     }
-
-    
 
     .btn-primary, .btn-success {
         padding: 9px 20px;
@@ -75,21 +76,24 @@
         font-size: 14px;
         font-weight: 500;
         color: white;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .btn-primary { background: var(--accent); }
-    .btn-success { background: var(--success); }
+    .btn-primary { background: linear-gradient(135deg, #2a9df4, #1c7ed6); }
+    .btn-success { background: linear-gradient(135deg, #1cc88a, #17a874); }
+    .btn-primary:hover, .btn-success:hover { transform: translateY(-2px); }
 
     table {
         width: 100%;
         border-collapse: collapse;
         border: 1px solid var(--border);
         margin-top: 10px;
+        table-layout: fixed;
     }
 
     th {
         background: var(--primary);
-        color: white;
+        color: #f1f4ff;
         padding: 12px;
         font-size: 14px;
         text-align: center;
@@ -100,208 +104,224 @@
         border-bottom: 1px solid var(--border);
         text-align: center;
         font-size: 14px;
+        color: var(--text-primary, #e9edf7);
+        overflow: visible;
+        text-overflow: unset;
+        white-space: normal;
     }
 
     tr:nth-child(even) {
-        background: #f8f9fc;
+        background: rgba(255, 255, 255, 0.02);
     }
 
-    
+    tr:hover td {
+        background: rgba(28, 200, 138, 0.06);
+    }
+
     .pagination {
         margin-top: 15px;
         text-align: right;
         font-size: 14px;
+        color: var(--text-secondary, #a6b0c3);
     }
 
+    .pagination a {
+        color: #6fa8ff;
+        text-decoration: none;
+        margin-left: 10px;
+        font-weight: 600;
+    }
+    .pagination a:hover { text-decoration: underline; }
 
     /* ===== PROFILE POPUP ===== */
-.profile-popup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 3000;
-}
-
-.popup-inner {
-    background: #fff;
-    width: 420px;
-    border-radius: 14px;
-    padding: 22px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    position: relative;
-}
-
-/* Close icon */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    font-size: 26px;
-    cursor: pointer;
-    color: #444;
-}
-
-/* ===== PROFILE CARD ===== */
-.profile-card {
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-}
-
-/* Avatar */
-.profile-left {
-    flex-shrink: 0;
-}
-
-.profile-left .avatar {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    border: 2px solid #e5e7eb;
-    object-fit: cover;
-}
-
-/* Right side */
-.profile-right {
-    flex: 1;
-}
-
-.profile-right h3 {
-    margin: 0 0 6px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-}
-
-.profile-info {
-    font-size: 14px;
-    color: #374151;
-    line-height: 1.6;
-}
-
-.profile-info div {
-    display: flex;
-    gap: 6px;
-}
-
-.profile-info strong {
-    min-width: 90px;
-    color: #111827;
-}
-
-/* Email wrap fix */
-.profile-info span {
-    word-break: break-all;
-}
-
-/* ===== BUTTONS ===== */
-.popup-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.popup-buttons button {
-    min-width: 90px;
-    height: 34px;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-/* FIX ACTION BUTTONS HORIZONTAL */
-.action-cell {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-}
-
-.action-cell a,
-.action-cell form {
-    display: inline-flex;
-    margin: 0;
-}
-
-/* =========================
-   FORM GRID FIX
-========================= */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.form-grid input {
-    width: 100%;
-    height: 42px;
-    padding: 0 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    background: #fff;
-}
-
-/* Responsive */
-@media (max-width: 1200px) {
-    .form-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .profile-popup {
+        position: fixed;
+        inset: 0;
+        background: rgba(6, 9, 16, 0.65);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
     }
-}
 
-@media (max-width: 768px) {
-    .form-grid {
-        grid-template-columns: 1fr;
+    .popup-inner {
+        background: var(--bg-card, #1a2236);
+        width: 420px;
+        border-radius: 16px;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        position: relative;
+        animation: fadeInUp 0.3s ease both;
     }
-}
 
-table {
-    table-layout: fixed;
-}
+    /* Close icon */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        font-size: 26px;
+        cursor: pointer;
+        color: var(--text-secondary, #a6b0c3);
+        transition: color 0.2s ease;
+    }
+    .close-btn:hover { color: var(--danger); }
 
-/* Common cell styling */
-th, td {
-    overflow: visible;
-    text-overflow: unset;
-    white-space: normal;
-}
-.btn-tertiary {
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid #e5e7eb;
-    cursor: pointer;
-    background: #f3f4f6;
-    color: #111827;
-    transition: all 0.2s ease;
-}
+    /* ===== PROFILE CARD ===== */
+    .profile-card {
+        display: flex;
+        gap: 18px;
+        align-items: flex-start;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
 
-.btn-tertiary:hover {
-    background: #e5e7eb;
-}
+    /* Avatar */
+    .profile-left {
+        flex-shrink: 0;
+    }
 
-/* Fixed column widths */
-th:nth-child(1) { width: 4%; }   /* ID */
-th:nth-child(2) { width: 14%; }  /* Name */
-th:nth-child(3) { width: 18%; }  /* Email */
-th:nth-child(4) { width: 10%; }  /* Mobile */
-th:nth-child(5) { width: 14%; }  /* Emergency */
-th:nth-child(6) { width: 6%; }   /* Room */
-th:nth-child(7) { width: 6%; }   /* Bed */
-th:nth-child(8) { width: 10%; }  /* Join Date */
-th:nth-child(9) { width: 7%; }   /* Room Rent */
-th:nth-child(10){ width: 7%; }   /* Student Rent */
-th:nth-child(11){ width: 12%; }  /* Actions */
+    .profile-left .avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 2px solid var(--accent, #4e8cff);
+        object-fit: cover;
+        background: #10182b;
+    }
 
+    /* Right side */
+    .profile-right {
+        flex: 1;
+    }
+
+    .profile-right h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary, #e9edf7);
+    }
+
+    .profile-info {
+        font-size: 14px;
+        color: var(--text-secondary, #a6b0c3);
+        line-height: 1.6;
+    }
+
+    .profile-info div {
+        display: flex;
+        gap: 6px;
+    }
+
+    .profile-info strong {
+        min-width: 90px;
+        color: var(--text-primary, #e9edf7);
+    }
+
+    /* Email wrap fix */
+    .profile-info span {
+        word-break: break-all;
+    }
+
+    /* ===== BUTTONS ===== */
+    .popup-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .popup-buttons button {
+        min-width: 90px;
+        height: 34px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .popup-buttons button:hover { transform: translateY(-2px); }
+
+    /* FIX ACTION BUTTONS HORIZONTAL */
+    .action-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .action-cell a,
+    .action-cell form {
+        display: inline-flex;
+        margin: 0;
+    }
+
+    /* =========================
+       FORM GRID FIX
+    ========================= */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .form-grid input {
+        width: 100%;
+        height: 42px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 14px;
+        background: var(--bg-input, #1c2438);
+        color: var(--text-primary, #e9edf7);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+        .form-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .btn-tertiary {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-primary, #e9edf7);
+        transition: all 0.2s ease;
+    }
+
+    .btn-tertiary:hover {
+        background: rgba(78, 140, 255, 0.16);
+        border-color: var(--accent, #4e8cff);
+    }
+
+    /* Fixed column widths */
+    th:nth-child(1) { width: 4%; }   /* ID */
+    th:nth-child(2) { width: 14%; }  /* Name */
+    th:nth-child(3) { width: 18%; }  /* Email */
+    th:nth-child(4) { width: 10%; }  /* Mobile */
+    th:nth-child(5) { width: 14%; }  /* Emergency */
+    th:nth-child(6) { width: 6%; }   /* Room */
+    th:nth-child(7) { width: 6%; }   /* Bed */
+    th:nth-child(8) { width: 10%; }  /* Join Date */
+    th:nth-child(9) { width: 7%; }   /* Room Rent */
+    th:nth-child(10){ width: 7%; }   /* Student Rent */
+    th:nth-child(11){ width: 12%; }  /* Actions */
 
 </style>
 
@@ -344,7 +364,7 @@ th:nth-child(11){ width: 12%; }  /* Actions */
 
 
 <div class="page-wrapper">
-     <i class="fas fa-user-graduate" style="margin-right:8px; color:#0d6efd;"></i>
+     <i class="fas fa-user-graduate" style="margin-right:8px; color:#4e8cff;"></i>
     Student Management
 </div>
 

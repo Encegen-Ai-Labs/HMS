@@ -5,124 +5,112 @@
 .outer-box {
     width: 95%;
     max-width: 1300px;
-    margin: 30px auto;
-    background: rgba(15, 23, 42, 0.96);
+    margin: 10px auto 30px;
+    background: rgba(255, 255, 255, 0.03);
     padding: 25px;
-    border-radius: 24px;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+    border-radius: 20px;
+    animation: fadeInUp 0.4s ease both;
 }
 
 .inner-card {
-    background: transparent;
-    padding: 10px 0 0 0;
+    background: var(--bg-card-alt, #1f2a42);
+    padding: 30px;
     border-radius: 15px;
     max-width: 1150px;
     margin: auto;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .page-title {
     text-align: center;
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 28px;
-    margin-top: 0;
-    color: #f8fafc;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary, #e9edf7);
 }
 
 .form-row {
     display: flex;
     gap: 15px;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .form-row input {
-    padding: 14px 16px;
+    padding: 11px;
     width: 100%;
-    max-width: 320px;
-    border-radius: 16px;
-    border: 1px solid rgba(148, 163, 184, 0.16);
-    background: #0f172a;
-    color: #e2e8f0;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--bg-input, #1c2438);
+    color: var(--text-primary, #e9edf7);
 }
 
 .add-btn {
-    background: linear-gradient(135deg, #22c55e, #38bdf8);
-    color: #0f172a;
+    background: linear-gradient(135deg, #2a9df4, #1c7ed6);
+    color: white;
     border: none;
-    padding: 14px 18px;
+    padding: 13px;
     width: 100%;
-    max-width: 180px;
     font-size: 16px;
-    border-radius: 16px;
+    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .add-btn:hover {
-    opacity: 0.95;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(42, 157, 244, 0.35);
 }
 
 .custom-table {
     width: 100%;
     margin-top: 25px;
     border-collapse: collapse;
-    background: rgba(15, 23, 42, 0.96);
-    border-radius: 18px;
-    overflow: hidden;
 }
 
-.custom-table thead th {
-    background: rgba(15, 23, 42, 0.98);
-    color: #e2e8f0;
-    padding: 16px;
+.custom-table th {
+    background: #202a42;
+    color: #f1f4ff;
+    padding: 12px;
     text-align: center;
 }
 
 .custom-table td {
-    padding: 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    padding: 14px;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     text-align: center;
-    color: #cbd5e1;
+    color: var(--text-primary, #e9edf7);
 }
 
-.custom-table tr:nth-child(even) td {
-    background: rgba(255, 255, 255, 0.04);
-}
-
-.custom-table tr:hover td {
-    background: rgba(56, 189, 248, 0.08);
+.custom-table tbody tr:hover td {
+    background: rgba(28, 200, 138, 0.08);
 }
 
 .pagination {
     margin-top: 20px;
     text-align: right;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    color: #cbd5e1;
 }
 
 .pagination a {
-    padding: 10px 14px;
-    background: rgba(56, 189, 248, 0.12);
-    color: #38bdf8;
-    border-radius: 14px;
+    padding: 6px 12px;
+    background: linear-gradient(135deg, #2a9df4, #1c7ed6);
+    color: white;
+    border-radius: 5px;
     text-decoration: none;
-    transition: background 0.2s ease;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
 }
 
 .pagination a:hover {
-    background: rgba(56, 189, 248, 0.2);
+    transform: translateY(-2px);
 }
 
 .pagination span {
     margin: 0 10px;
     font-weight: 600;
+    color: var(--text-secondary, #a6b0c3);
 }
 </style>
 

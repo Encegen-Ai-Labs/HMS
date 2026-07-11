@@ -3,23 +3,25 @@
 
 <style>
     .page-container {
-        max-width: 760px;
-        margin: 30px auto;
-        padding: 32px;
-        background: rgba(15, 23, 42, 0.96);
-        border-radius: 24px;
-        box-shadow: 0 24px 60px rgba(0,0,0,0.24);
-        border: 1px solid rgba(148, 163, 184, 0.16);
+        max-width: 700px;
+        margin: 10px auto 30px;
+        padding: 30px;
+        background: var(--bg-card-alt, #1f2a42);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        font-family: "Inter", sans-serif;
+        animation: fadeInUp 0.4s ease both;
     }
 
     .breadcrumb {
-        color: #94a3b8;
+        color: var(--text-secondary, #a6b0c3);
         font-size: 15px;
-        margin-bottom: 14px;
+        margin-bottom: 10px;
     }
 
     .breadcrumb a {
-        color: #38bdf8;
+        color: #6fa8ff;
         text-decoration: none;
     }
 
@@ -28,52 +30,44 @@
     }
 
     .back-btn {
-        background: rgba(56, 189, 248, 0.16);
-        color: #e2e8f0;
-        padding: 10px 18px;
-        border-radius: 14px;
+        background: linear-gradient(135deg, #2a9df4, #1c7ed6);
+        color: white;
+        padding: 8px 18px;
+        border-radius: 6px;
         text-decoration: none;
         font-size: 14px;
-        transition: background 0.2s ease;
-        border: 1px solid rgba(56, 189, 248, 0.22);
+        transition: transform 0.2s ease;
     }
 
     .back-btn:hover {
-        background: rgba(56, 189, 248, 0.28);
+        transform: translateY(-2px);
     }
 
     h2 {
-        font-weight: 700;
-        margin: 18px 0 14px;
+        font-weight: 600;
+        margin: 15px 0;
         text-align: center;
-        color: #e2e8f0;
+        color: var(--text-primary, #e9edf7);
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 18px;
+        margin-top: 15px;
     }
 
     th, td {
-        padding: 14px 12px;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         font-size: 15px;
-        color: #cbd5e1;
+        color: var(--text-primary, #e9edf7);
     }
 
     th {
-        background: rgba(15, 23, 42, 0.98);
+        background: #202a42;
+        color: #f1f4ff;
         text-align: left;
-        font-weight: 700;
-    }
-
-    tbody tr:nth-child(even) {
-        background: rgba(255,255,255,0.03);
-    }
-
-    tbody tr:hover {
-        background: rgba(56, 189, 248, 0.08);
+        font-weight: 600;
     }
 </style>
 

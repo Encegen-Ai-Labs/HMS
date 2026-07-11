@@ -1,19 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment Log History</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        table, th, td { border: 1px solid black; padding: 10px;}
-        th { background: #4facfe; color: white; }
-    </style>
-</head>
-<body>
-    
-<h2>Payment Log History</h2>
 
+<style>
+    .logs-title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--text-primary, #e9edf7);
+    }
+
+    .logs-table-wrap {
+        background: var(--bg-card-alt, #1f2a42);
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 10px;
+        overflow-x: auto;
+        animation: fadeInUp 0.4s ease both;
+    }
+
+    .logs-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0;
+    }
+
+    .logs-table-wrap th, .logs-table-wrap td {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 12px;
+        text-align: center;
+        color: var(--text-primary, #e9edf7);
+    }
+
+    .logs-table-wrap th {
+        background: #202a42;
+        color: #f1f4ff;
+    }
+
+    .logs-table-wrap tbody tr:hover {
+        background: rgba(28, 200, 138, 0.08);
+    }
+</style>
+
+<h2 class="logs-title"><i class="fas fa-clock-rotate-left"></i> Payment Log History</h2>
+
+<div class="logs-table-wrap">
 <table>
     <thead>
         <tr>
@@ -29,12 +60,13 @@
             <td>{{ log.timestamp.strftime("%d-%m-%Y %I:%M %p") }}</td>
             <td>{{ log.student_name }}</td>
             <td>{{ log.month }}</td>
-            <td>{{ log.amount_paid }}</td>
+            <td>₹{{ log.amount_paid }}</td>
         </tr>
+        {% else %}
+        <tr><td colspan="4" style="color: var(--text-muted, #6d7690);">No payment logs yet.</td></tr>
         {% endfor %}
     </tbody>
 </table>
-{% endblock %}
+</div>
 
-</body>
-</html>
+{% endblock %}

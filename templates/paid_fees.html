@@ -1,17 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Paid Fees</h2>
 
-<table class="table">
+<style>
+    .fees-title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--text-primary, #e9edf7);
+    }
+    .fees-table-wrap {
+        background: var(--bg-card-alt, #1f2a42);
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 10px;
+        overflow-x: auto;
+        animation: fadeInUp 0.4s ease both;
+    }
+    .fees-table-wrap table { width: 100%; border-collapse: collapse; }
+    .fees-table-wrap th, .fees-table-wrap td {
+        padding: 12px; text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--text-primary, #e9edf7);
+    }
+    .fees-table-wrap th { background: #202a42; color: #f1f4ff; }
+    .fees-table-wrap tbody tr:hover { background: rgba(28, 200, 138, 0.08); }
+</style>
+
+<h2 class="fees-title"><i class="fas fa-circle-check"></i> Paid Fees</h2>
+
+<div class="fees-table-wrap">
+<table>
     <tr>
         <th>Name</th><th>Paid Amount</th>
     </tr>
     {% for s in students %}
     <tr>
         <td>{{ s.name }}</td>
-        <td>{{ s.paid_fee }}</td>
+        <td>₹{{ s.paid_fee }}</td>
     </tr>
+    {% else %}
+    <tr><td colspan="2" style="color: var(--text-muted, #6d7690);">No paid fee records.</td></tr>
     {% endfor %}
 </table>
+</div>
 
 {% endblock %}
