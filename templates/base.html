@@ -325,6 +325,10 @@
         <i class="fas fa-user-graduate"></i> Students
     </a>
 
+    <a href="/floors" class="{% if active_page=='floors' %}active{% endif %}">
+        <i class="fas fa-building"></i> Floors
+    </a>
+
     <a href="/rooms" class="{% if active_page=='rooms' %}active{% endif %}">
         <i class="fas fa-door-open"></i> Rooms
     </a>
@@ -333,10 +337,21 @@
         <i class="fas fa-bed"></i> Beds
     </a>
 
+    <a href="/occupancy" class="{% if active_page=='occupancy' %}active{% endif %}">
+        <i class="fas fa-chart-simple"></i> Occupancy
+    </a>
+
     <a href="/fees" class="{% if active_page=='fees' %}active{% endif %}">
         <i class="fas fa-money-bill-wave"></i> Fees
     </a>
 
+    <a href="/reports" class="{% if active_page=='reports' %}active{% endif %}">
+        <i class="fas fa-file-lines"></i> Reports
+    </a>
+
+    <a href="/requests" class="{% if active_page=='requests' %}active{% endif %}">
+        <i class="fas fa-comment-dots"></i> Student Requests
+    </a>
 
     <a href="/logs" class="{% if active_page=='logs' %}active{% endif %}">
         <i class="fas fa-history"></i> Log Report

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise a Request</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background: #0e1420; color: #e9edf7; min-height: 100vh; padding: 30px 20px; }
+
+        .topbar {
+            max-width: 900px; margin: 0 auto 24px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .topbar h1 { font-size: 22px; font-weight: 700; }
+        .topbar .links { display: flex; gap: 18px; align-items: center; }
+        .topbar a { color: #6fa8ff; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .topbar a.logout { color: #ff8a9a; }
+        .topbar a:hover { text-decoration: underline; }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        .form-card {
+            background: #1f2a42;
+            border-radius: 14px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+            margin-bottom: 26px;
+            animation: fadeInUp 0.4s ease both;
+        }
+
+        .form-card h3 { margin-bottom: 16px; font-size: 17px; }
+
+        .form-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+
+        .form-row select, .form-row input {
+            flex: 1 1 200px;
+            padding: 11px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #1c2438;
+            color: #e9edf7;
+            font-size: 14.5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #1c2438;
+            color: #e9edf7;
+            font-size: 14.5px;
+            min-height: 100px;
+            resize: vertical;
+            margin-bottom: 14px;
+        }
+
+        button.submit-btn {
+            background: linear-gradient(135deg, #1cc88a, #17a874);
+            color: #fff; border: none; padding: 12px 26px;
+            border-radius: 8px; font-weight: 600; cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        button.submit-btn:hover { transform: translateY(-2px); }
+
+        .req-item {
+            background: #1f2a42;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 16px 18px;
+            margin-bottom: 12px;
+        }
+        .req-item h4 { font-size: 15px; margin-bottom: 4px; }
+        .req-item .meta { font-size: 12px; color: #6d7690; margin-bottom: 8px; }
+        .req-item .desc { font-size: 13.5px; color: #a6b0c3; margin-bottom: 8px; }
+        .req-item .response { font-size: 13.5px; color: #46e0a8; border-left: 3px solid #1cc88a; padding-left: 10px; }
+
+        .status-badge { font-size: 11.5px; padding: 3px 10px; border-radius: 999px; font-weight: 600; }
+        .st-open { background: rgba(239,90,111,0.16); color: #ff8a9a; }
+        .st-progress { background: rgba(246,194,62,0.18); color: #f6c23e; }
+        .st-resolved { background: rgba(28,200,138,0.16); color: #46e0a8; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <h1><i class="fas fa-comment-dots"></i> Raise a Request</h1>
+    <div class="links">
+        <a href="{{ url_for('student_dashboard') }}"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        <a href="{{ url_for('student_logout') }}" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="form-card">
+        <h3>Submit a new case / request</h3>
+        <form method="POST" action="{{ url_for('student_requests') }}" novalidate>
+            <div class="form-row">
+                <select name="category">
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Fee Query">Fee Query</option>
+                    <option value="Room/Bed Change">Room / Bed Change</option>
+                    <option value="Complaint">Complaint</option>
+                    <option value="General">General</option>
+                </select>
+                <input type="text" name="subject" placeholder="Subject" required minlength="3">
+            </div>
+            <textarea name="description" placeholder="Describe your issue or request in detail..." required></textarea>
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Request</button>
+        </form>
+    </div>
+
+    <h3 style="margin-bottom: 14px;">Your Requests</h3>
+
+    {% for r in requests %}
+    <div class="req-item">
+        <h4>{{ r.subject }}</h4>
+        <div class="meta">
+            {{ r.category }} &middot; {{ r.created_at.strftime("%d %b %Y, %I:%M %p") }}
+            &middot;
+            <span class="status-badge {{ 'st-open' if r.status=='Open' else ('st-resolved' if r.status=='Resolved' else 'st-progress') }}">
+                {{ r.status }}
+            </span>
+        </div>
+        <div class="desc">{{ r.description }}</div>
+        {% if r.admin_response %}
+        <div class="response"><strong>Admin:</strong> {{ r.admin_response }}</div>
+        {% endif %}
+    </div>
+    {% else %}
+    <p style="color:#6d7690;">You haven't raised any requests yet.</p>
+    {% endfor %}
+
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div id="toast-container" style="position: fixed; bottom: 25px; right: 25px; z-index: 9999;"></div>
+{% for category, message in messages %}
+<div class="flask-toast" data-message="{{ message }}" data-category="{{ category }}" style="display:none;"></div>
+{% endfor %}
+<script>
+function showToast(message, category) {
+    let bg = "#1cc88a";
+    if (category === "error" || category === "danger") bg = "#ef5a6f";
+    if (category === "warning") bg = "#f6c23e";
+    let toast = document.createElement("div");
+    toast.style.minWidth = "250px"; toast.style.padding = "14px 20px"; toast.style.marginTop = "10px";
+    toast.style.borderRadius = "10px"; toast.style.color = "white"; toast.style.background = bg;
+    toast.style.fontSize = "14.5px"; toast.style.fontWeight = "500";
+    toast.style.boxShadow = "0 10px 25px rgba(0,0,0,0.35)"; toast.style.opacity = "0";
+    toast.style.transition = "opacity 0.4s ease"; toast.innerText = message;
+    document.getElementById("toast-container").appendChild(toast);
+    requestAnimationFrame(() => toast.style.opacity = "1");
+    setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 3200);
+}
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".flask-toast").forEach(function (el) {
+        showToast(el.dataset.message, el.dataset.category);
+    });
+});
+</script>
+{% endif %}
+{% endwith %}
+
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+</body>
+</html>

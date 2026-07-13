@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .req-title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--text-primary, #e9edf7);
+    }
+
+    .row { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 22px; }
+
+    .stat-card {
+        flex: 1 1 200px;
+        padding: 20px;
+        border-radius: 14px;
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+        background: linear-gradient(135deg, #2a9df4, #1c7ed6);
+    }
+    .stat-card h5 { font-size: 13px; font-weight: 500; opacity: 0.9; margin-bottom: 6px; }
+    .stat-card h2 { font-size: 26px; font-weight: 700; }
+
+    .req-card {
+        background: var(--bg-card-alt, #1f2a42);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 16px;
+        animation: fadeInUp 0.35s ease both;
+    }
+
+    .req-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .req-head h4 {
+        color: var(--text-primary, #e9edf7);
+        font-size: 16px;
+    }
+
+    .req-meta {
+        color: var(--text-secondary, #a6b0c3);
+        font-size: 12.5px;
+        margin-top: 3px;
+    }
+
+    .req-desc {
+        color: var(--text-secondary, #a6b0c3);
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 12px;
+        background: rgba(255,255,255,0.03);
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .badge-cat {
+        background: rgba(78,140,255,0.16); color: #8fb4ff;
+        font-size: 11.5px; padding: 3px 10px; border-radius: 999px; font-weight: 600;
+    }
+
+    .status-select-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .status-badge {
+        font-size: 12px; padding: 4px 12px; border-radius: 999px; font-weight: 600;
+    }
+    .st-open { background: rgba(239,90,111,0.16); color: #ff8a9a; }
+    .st-progress { background: rgba(246,194,62,0.18); color: #f6c23e; }
+    .st-resolved { background: rgba(28,200,138,0.16); color: #46e0a8; }
+
+    .req-card form {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .req-card textarea {
+        flex: 1 1 260px;
+        min-width: 220px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: var(--bg-input, #1c2438);
+        color: var(--text-primary, #e9edf7);
+        resize: vertical;
+        min-height: 44px;
+    }
+
+    .req-card select {
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: var(--bg-input, #1c2438);
+        color: var(--text-primary, #e9edf7);
+    }
+
+    .req-card button {
+        background: linear-gradient(135deg, #1cc88a, #17a874);
+        color: #fff; border: none; padding: 10px 20px;
+        border-radius: 8px; font-weight: 600; cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    .req-card button:hover { transform: translateY(-2px); }
+</style>
+
+<h2 class="req-title"><i class="fas fa-comment-dots"></i> Student Requests &amp; Cases</h2>
+
+<div class="row">
+    <div class="stat-card">
+        <h5>Open Requests</h5>
+        <h2>{{ open_count }}</h2>
+    </div>
+</div>
+
+{% for r in requests %}
+<div class="req-card">
+    <div class="req-head">
+        <div>
+            <h4>{{ r.subject }} <span class="badge-cat">{{ r.category }}</span></h4>
+            <div class="req-meta">
+                From <strong>{{ r.student.name if r.student else "Unknown" }}</strong>
+                (Room {{ r.student.room if r.student else '-' }}) &middot;
+                {{ r.created_at.strftime("%d %b %Y, %I:%M %p") }}
+            </div>
+        </div>
+        <span class="status-badge {{ 'st-open' if r.status=='Open' else ('st-resolved' if r.status=='Resolved' else 'st-progress') }}">
+            {{ r.status }}
+        </span>
+    </div>
+
+    <div class="req-desc">{{ r.description }}</div>
+
+    {% if r.admin_response %}
+    <div class="req-desc" style="border-left: 3px solid #1cc88a;">
+        <strong>Admin response:</strong> {{ r.admin_response }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('respond_request', request_id=r.id) }}">
+        <textarea name="admin_response" placeholder="Write a response...">{{ r.admin_response or '' }}</textarea>
+        <select name="status">
+            <option value="Open" {% if r.status=='Open' %}selected{% endif %}>Open</option>
+            <option value="In Progress" {% if r.status=='In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Resolved" {% if r.status=='Resolved' %}selected{% endif %}>Resolved</option>
+        </select>
+        <button type="submit">Save</button>
+    </form>
+</div>
+{% else %}
+<p style="color: var(--text-muted, #6d7690); text-align:center;">No requests have been raised yet.</p>
+{% endfor %}
+
+{% endblock %}

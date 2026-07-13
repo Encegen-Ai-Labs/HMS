@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Fees</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body {
+            background: radial-gradient(circle at 20% 20%, #12563f 0%, #0e1420 45%, #0a0e17 100%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+
+        .pay-card {
+            background: #161d2e;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            padding: 34px 38px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.45s ease both;
+        }
+
+        .pay-card a.back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #6fa8ff; text-decoration: none; font-size: 13.5px;
+            margin-bottom: 14px; float: left;
+        }
+
+        .pay-card h2 { font-size: 22px; font-weight: 700; margin: 20px 0 4px; clear: both; }
+        .pay-card p.sub { color: #a6b0c3; font-size: 14px; margin-bottom: 20px; }
+
+        .qr-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            display: inline-block;
+            margin-bottom: 18px;
+        }
+        .qr-box img { display: block; width: 200px; height: 200px; }
+
+        .amount-line {
+            font-size: 28px;
+            font-weight: 700;
+            color: #46e0a8;
+            margin-bottom: 6px;
+        }
+
+        .plan-toggle {
+            display: inline-flex;
+            background: #1c2438;
+            border-radius: 30px;
+            padding: 4px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .plan-toggle a {
+            padding: 8px 20px;
+            border-radius: 26px;
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #a6b0c3;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .plan-toggle a.active {
+            background: linear-gradient(135deg, #1cc88a, #17a874);
+            color: #fff;
+        }
+
+        .amount-note { color: #6d7690; font-size: 12.5px; margin-bottom: 22px; }
+
+        form.amount-form {
+            display: flex; gap: 10px; margin-bottom: 18px;
+        }
+        form.amount-form input {
+            flex: 1; padding: 12px 14px; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.12); background: #1c2438;
+            color: #e9edf7; font-size: 15px; outline: none;
+        }
+        form.amount-form input:focus { border-color: #1cc88a; box-shadow: 0 0 0 3px rgba(28,200,138,0.16); }
+
+        .btn-confirm {
+            width: 100%;
+            background: linear-gradient(135deg, #1cc88a, #17a874);
+            color: #fff; border: none; padding: 14px;
+            border-radius: 30px; font-size: 15.5px; font-weight: 700;
+            cursor: pointer; box-shadow: 0 10px 24px rgba(28,200,138,0.3);
+            transition: transform 0.2s ease;
+        }
+        .btn-confirm:hover { transform: translateY(-2px); }
+
+        .steps { text-align: left; margin-top: 22px; font-size: 13px; color: #a6b0c3; }
+        .steps li { margin-bottom: 6px; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="pay-card">
+    <a href="{{ url_for('student_dashboard') }}" class="back"><i class="fas fa-arrow-left"></i> Back</a>
+
+    <h2><i class="fas fa-qrcode"></i> Pay Hostel Fees</h2>
+    <p class="sub">Scan with any UPI app (GPay, PhonePe, Paytm)</p>
+
+    <div class="qr-box">
+        <img src="{{ url_for('payment_qr', student_id=student.id, amount=amount_due) }}" alt="Payment QR Code">
+    </div>
+
+    <div class="plan-toggle">
+        <a href="{{ url_for('student_pay', plan='monthly') }}" class="{{ 'active' if plan != 'yearly' else '' }}">Monthly</a>
+        <a href="{{ url_for('student_pay', plan='yearly') }}" class="{{ 'active' if plan == 'yearly' else '' }}">Yearly</a>
+    </div>
+
+    <div class="amount-line">₹{{ amount_due }}</div>
+    <div class="amount-note">
+        {% if plan == 'yearly' %}
+            Yearly bed rent ({{ student.name }} — Room {{ student.room or '-' }})
+        {% else %}
+            Monthly bed rent due for {{ student.name }} — Room {{ student.room or '-' }}
+        {% endif %}
+    </div>
+
+    <form class="amount-form" method="POST" action="{{ url_for('student_pay') }}" id="payForm">
+        <input type="hidden" name="plan" value="{{ plan }}">
+        <input type="number" name="amount" value="{{ amount_due }}" min="1" step="1" required>
+    </form>
+
+    <button type="submit" form="payForm" class="btn-confirm">
+        <i class="fas fa-circle-check"></i> I've Paid — Confirm
+    </button>
+
+    <ol class="steps">
+        <li>Scan the QR code above using your UPI app.</li>
+        <li>Complete the payment for the amount shown.</li>
+        <li>Tap "I've Paid — Confirm" to update your fee record.</li>
+    </ol>
+
+    <p style="margin-top:16px; font-size:13px;">
+        <a href="{{ url_for('student_requests') }}" style="color:#6fa8ff; text-decoration:none;">
+            <i class="fas fa-comment-dots"></i> Facing an issue with payment? Raise a request
+        </a>
+    </p>
+</div>
+
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+</body>
+</html>
